@@ -29,8 +29,6 @@ class Register(Resource):
 		if not Users.verify_hash(args['password'].encode("utf8"), current_user.password.encode("utf8")):
 			return {'message': 'The password entered does not correspond to the password sent to {}. Please try again'. format(args['email'])}, 403
 
-
-
 		current_user.activated = True #t
 		current_user.commit()
 		return {'message': '{}\'s account has been registered. Redirect to login'. format(args['email'])}, 201 #t
