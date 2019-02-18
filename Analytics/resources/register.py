@@ -3,9 +3,18 @@ from db import db
 from models.users import Users
 from datetime import datetime
 
-#TODO: add doc string 
-
 class Register(Resource):
+	"""API which allows users to activate their Shared Cities Dashboard account
+	Parameters can be passed using a POST request that contains a JSON of the following fields:
+        :param fullname: users fullname
+        :param email: users email address
+        :param password: users password that was sent when they were added on the admin page
+        :type fullname: string
+        :type email: string
+        :type password: string
+        :return: A message that indicates whether a user has been registered. If they have not, the message indicates why not
+        :rtype: JSON
+	"""     
 	parser = reqparse.RequestParser()
 	parser.add_argument('fullname', type=str, store_missing=False) 
 	parser.add_argument('email', type=str, store_missing=False, help = 'This field cannot be blank', required = True)
