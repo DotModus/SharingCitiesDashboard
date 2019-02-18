@@ -38,6 +38,7 @@ class Users(db.Model):
         return self.json()
 
     def json(self):
+        """ Returns a JSON representation of Users attributes """
         return {
             'id': self.id,
             'fullname': self.firstname,
@@ -47,6 +48,7 @@ class Users(db.Model):
         }
 
     def save(self):
+        """ Adds the current values of the Users fields to SQLAlchemy session but does not write to the database """
         try:
             db.session.add(self)
             db.session.flush()
@@ -55,10 +57,17 @@ class Users(db.Model):
             print(self.fullname, 'User already exists')
 
     def commit(self):
+        """ Writes all updates done via db.session.add() or manual update of the model class fields to the database """
         db.session.commit()
 
     @classmethod
     def find_by_email(cls, email):
+        """ Queries the users table according the email attribute
+            :param email: the email address of the user that is being looked up
+            :type email: string
+            :return: a Users instance where the contained attributes correspond to that of the email provided
+            :rtype: Instance of Users model class 
+        """
         return cls.query.filter_by(email = email).first()
 
     @staticmethod
