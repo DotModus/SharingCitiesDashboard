@@ -80,6 +80,7 @@ class Users(db.Model):
         :rtype: string
         """     
         return bcrypt.hashpw(password, bcrypt.gensalt())
+    
     @staticmethod
     def verify_hash(password, hash):
         """A method that adds two things
