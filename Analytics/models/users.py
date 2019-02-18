@@ -72,19 +72,19 @@ class Users(db.Model):
 
     @staticmethod
     def generate_hash(password):
-        """A method that adds two things
+        """A method that uses the provided password and additional salt in order to generate a hash that is to be stored in the DB
 
         :param password: the plaintext user password
         :type password: UTF8 encoded string
-        :return: a hashed of the password. The password has salt appeneded to it before it is hashed
+        :return: a hash of the password. The password has salt appeneded to it before it is hashed
         :rtype: string
         """     
         return bcrypt.hashpw(password, bcrypt.gensalt())
     
     @staticmethod
     def verify_hash(password, hash):
-        """A method that adds two things
-
+        """A method that verifies whether the password provided matches the corresponding password stored in the database
+        
         :param password: the plaintext user password
         :param hash: the user's hashed password that is stored in the user table
         :type password: UTF8 encoded string
