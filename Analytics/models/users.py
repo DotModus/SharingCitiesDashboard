@@ -1,11 +1,12 @@
+'''
+Data model class for User credentials 
+'''
+
 import json
 from db import db
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 import bcrypt
-
-
-#TODO: add doc string 
 
 class Users(db.Model):
     __tablename__ = 'users'
@@ -15,7 +16,7 @@ class Users(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(400), nullable = False)
     admin = db.Column(db.Boolean)
-    activated = db.Column(db.Boolean)
+    activated = db.Column(db.Boolean) # When a user is added (by the Admin page), their activated field is False. They need to access the /register endpoint to change this field to True
     timestamp = db.Column(db.DateTime)
 
     def __init__(self, fullname, email, password, admin, activated, timestamp=None):
@@ -62,8 +63,24 @@ class Users(db.Model):
 
     @staticmethod
     def generate_hash(password):
+        """A method that adds two things
+
+        :param password: the plaintext user password
+        :type password: UTF8 encoded string
+        :return: a hashed of the password. The password has salt appeneded to it before it is hashed
+        :rtype: string
+        """     
         return bcrypt.hashpw(password, bcrypt.gensalt())
     @staticmethod
     def verify_hash(password, hash):
+        """A method that adds two things
+
+        :param password: the plaintext user password
+        :param hash: the user's hashed password that is stored in the user table
+        :type password: UTF8 encoded string
+        :type password: UTF8 encoded string
+        :return: whether the password, when hashed, corresponds to the password hash stored in the users table
+        :rtype: boolean
+        """     
         return bcrypt.checkpw(password, hash)
 
