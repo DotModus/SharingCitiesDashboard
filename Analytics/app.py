@@ -7,6 +7,8 @@ from resources.request_for_data import RequestForData
 from db import db
 from flask_cors import CORS
 
+from resources.widgets import Widgets
+
 def create_app(**config_overrides):
     app = Flask(__name__)
     app.config.from_pyfile('settings.py')
@@ -34,5 +36,7 @@ def create_app(**config_overrides):
     migrate = Migrate(app, db)
     api.add_resource(Analytics, '/analytics')
     api.add_resource(RequestForData, '/data')
+    
+    api.add_resource(Widgets, '/widgets', endpoint='widgets')
 
     return app
