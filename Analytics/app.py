@@ -1,19 +1,25 @@
-from flask import Flask
-from flask_restful import Api
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from resources.analytics import Analytics
-from resources.request_for_data import RequestForData
-from resources.login import Login, SecretResource
-from resources.refresh_token import TokenRefresh
-from resources.logout import UserLogoutAccess, UserLogoutRefresh
-from db import db
-from flask_cors import CORS
-# from flask_bcrypt import Bcrypt
-
-from flask_jwt_extended import JWTManager
 import datetime
+
+from flask import Flask
+from flask_cors import CORS
+from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate
+from flask_restful import Api
+
+from db import db
 from models.revoked_tokens import RevokedTokens
+from resources.analytics import Analytics
+from resources.login import Login, SecretResource
+from resources.logout import UserLogoutAccess, UserLogoutRefresh
+from resources.refresh_token import TokenRefresh
+from resources.request_for_data import RequestForData
+from resources.user_admin import UserAdmin
+from resources.user_permissions import UserPermissions
+from resources.widgets import Widgets
+from resources.user_list import UsersList
+
+
+# from flask_bcrypt import Bcrypt
 
 def create_app(**config_overrides):
     app = Flask(__name__)
@@ -54,22 +60,6 @@ def create_app(**config_overrides):
     def user_identity_lookup(user):
         return user.email
 
-    
-    from models.operation import Operation
-    from models.request_analytics import RequestAnalytics
-    from models.request_table_cols import RequestTablesCols
-    from models.request_tables import RequestTables
-    from models.api import API
-    from models.attributes import Attributes
-    from models.sensor import Sensor
-    from models.location import Location
-    from models.unit import Unit
-    from models.sensor_attribute import SensorAttribute 
-    from models.theme import Theme, SubTheme
-
-
-    from models.users import Users
-
     db.create_all()
 
     migrate = Migrate(app, db)
@@ -82,5 +72,11 @@ def create_app(**config_overrides):
     api.add_resource(UserLogoutAccess, '/revokeAccess')
     api.add_resource(UserLogoutRefresh, '/revokeRefresh')
     api.add_resource(SecretResource, '/secret')
+
+    api.add_resource(Widgets, '/widgets', endpoint='widgets')
+    api.add_resource(UserAdmin, '/admin', endpoint='admin')
+    api.add_resource(UserPermissions, '/admin/user_permissions', endpoint='user_permissions')
+    api.add_resource(UsersList, '/admin/list_users', endpoint='list_users')
+
 
     return app
