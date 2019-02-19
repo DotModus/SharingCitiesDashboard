@@ -6,7 +6,6 @@ from datetime import datetime
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, get_jwt_identity,get_jwt_claims)
 from models.users import Users
 
-#TODO: add doc string 
 
 class Login(Resource):
 	"""API that grants users access to the Sharing Cities Dashboard aswell as sends their correpsonding access and refresh JWT
