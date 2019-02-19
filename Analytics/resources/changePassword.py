@@ -4,7 +4,7 @@ from models.users import Users
 
 class ChangePassword(Resource):
 	"""API that allows a user change their password in the users table 
-	   Parameters can be passed using a POST request that contains a JSON with the following fields:
+	   Parameters can be passed using a PATCH request that contains a JSON with the following fields:
         :param email: users email address
         :param password_old: users current password
         :param password_new: users new password that they want to replace password_old
