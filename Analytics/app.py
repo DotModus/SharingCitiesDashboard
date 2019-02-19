@@ -26,7 +26,6 @@ def create_app(**config_overrides):
     app.config['JWT_BLACKLIST_ENABLED'] = True
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
 
-    # password_bcrypt = Bcrypt(app)
     db.init_app(app)
     db.app = app
 
