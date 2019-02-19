@@ -1,3 +1,7 @@
+'''
+Data model class for storing decrypted access and refresh JWTs that have been revoked 
+'''
+
 from db import db
 
 class RevokedTokens(db.Model):
