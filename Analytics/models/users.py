@@ -1,11 +1,13 @@
+'''
+Data model class for User credentials 
+'''
+
 import json
 from db import db
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 import bcrypt
 
-
-#TODO: add doc string 
 
 class Users(db.Model):
     __tablename__ = 'users'
