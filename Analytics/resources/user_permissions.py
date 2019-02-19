@@ -12,24 +12,23 @@ from models.users import Users
 
 class UserPermissions(Resource):
 
-
     def __init__(self):
-        #Post request parser
+        # Post request parser
         self.post_reqparser = reqparse.RequestParser()
-        self.post_reqparser.add_argument('email', required=True, location=['form','json'])
+        self.post_reqparser.add_argument('email', required=True, location=['form', 'json'])
         self.post_reqparser.add_argument('activated', location=['form', 'json'])
-        self.post_reqparser.add_argument('admin',  location=['form', 'json'])
+        self.post_reqparser.add_argument('admin', location=['form', 'json'])
 
         # Get request paser
         self.get_reqparser = reqparse.RequestParser()
         self.get_reqparser.add_argument('email', required=True, location=['form', 'json'])
         super().__init__()
 
-
     '''
         Example:    {"email": "Johnny@gmail.com"}
         
     '''
+
     @jwt_required
     def get(self):
         args = self.get_reqparser.parse_args()
@@ -40,10 +39,10 @@ class UserPermissions(Resource):
 
         return user.json(), HTTPStatus.OK.value
 
-
     '''
         Example: {"email" : "Johnny@gmail.com", "activated" : "true" , "admin" : "true"}
     '''
+
     @jwt_required
     def post(self):
         args = self.post_reqparser.parse_args()
@@ -67,9 +66,3 @@ class UserPermissions(Resource):
         user.save()
         user.commit()
         return user.json(), HTTPStatus.OK.value
-
-
-
-
-
-
